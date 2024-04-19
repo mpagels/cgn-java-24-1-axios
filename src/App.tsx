@@ -1,5 +1,6 @@
 import axios from "axios";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+
 
 type Person = {
     id: number,
@@ -14,9 +15,17 @@ function App() {
 
     const [data, setData] = useState<Person[]>([]);
 
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+
     function fetchData() {
         axios.get("https://reqres.in/api/users").then((response) => {
             setData(response.data.data)
+        }).catch(error => {
+            console.log(error.message)
         })
     }
 
@@ -24,12 +33,12 @@ function App() {
 
   return (
     <>
-        <button onClick={fetchData}>Fetch Data</button>
-        <ul>
+        {data.length === 0 ? <h1>NO DATA</h1>: <ul>
             {data.map((person: Person) => {
                 return <li key={person.id}>{person.first_name} {person.last_name}</li>
             })}
-        </ul>
+        </ul>}
+
     </>
   )
 }
