@@ -1,0 +1,9 @@
+.pagination {
+    display: flex;
+    list-style: none;
+    gap: 20px
+}
+
+.item {
+    cursor: pointer;
+}
